@@ -1,0 +1,9 @@
+This directory contains the JSON string formatter to be used when sending AQI data to the MQTT broker.
+It uses the cJSON library to create a string that can be sent with MQTT.
+To use it:
+First fill in the device_shadow structure with the appropriate data. 
+Second, obtain the epoch time (aka kernel time) as a 64 bit integer.
+Third, create a device ID string, it can be anything as long as it is unique.
+Then copy the Create_MQTT function, call it with the appropriate parameters and then you will have your MQTT string to send.
+
+You can run this as standalone code to test it as well.
