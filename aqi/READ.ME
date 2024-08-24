@@ -1,8 +1,0 @@
-This repo contains files for the Air Quality Index project based on the Bosch 630 sensor. There are currently two subdirectories, one for MQTT and the other for the standalone ESP8266 project. 
-
-The MQTT project makes use of an MQTT broker on the ADRCS server. For access details, please contact VE6VH (at) ve6vh.org. Any data sent to the broker using the topic "aprs" is forwarded to
-a client that will publish it to aprs.fi. The data format is described in the document that can be found in the directory. The data is sourced from a Nordic Thingy91 which uses the cellular
-service to report latitude and longitude, temperature, pressure, humidity and air quality.
-
-The standalone project uses the same sensor attached to an ESP8266, which connects to your local wifi to report directly to APRS. It does not use the broker, so the code has to be customized
-for your callsign, wifi access point and password. Use the Arduino IDE to customize the code.
