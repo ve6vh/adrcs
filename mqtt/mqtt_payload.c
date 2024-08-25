@@ -33,6 +33,35 @@
 #include "datatypes.h"
 
 /*
+ *	Pubclising topic processing
+*/
+char *MQTT_Topics[N_MQTT_PAYLOADS] = {
+	"mqtt_aprs/aqi/",
+	"mqtt_aprs/rpt/",
+	"mqtt_aprs/rpt/",
+
+};
+
+char hdrBuf[100];
+
+// return the correct publishing topic based on payload type
+char *Get_MQTT_PubTopic(MQTT_HDR *hdr)
+{
+	switch (hdr->PayloadType) {
+
+	case MQTT_AQI_PAYLOAD:
+	case MQTT_UIFRAM_PAYLOAD:
+	case MQTT_TELEM_PAYLOAD:
+		strcpy(hdrBuf, MQTT_Topics[hdr->PayloadType]);
+		strcat(hdrBuf, hdr->HwType);
+		return hdrBuf;
+
+	default:
+		return NULL;
+	}
+}
+
+/*
  *  header record is the same for all record type
 */
 bool Format_MQTT_hdr(cJSON *root_object, struct mqtt_hdr_t *hdr_data)

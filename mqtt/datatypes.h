@@ -51,6 +51,12 @@
 #define	MAX_INP				5			// max number of inputs
 #define	MAX_OUT				5			// max number of outputs
 
+// MQTT payload frame types
+#define	MQTT_AQI_PAYLOAD	0			// AQI application
+#define	MQTT_UIFRAM_PAYLOAD	1			// UI Frame
+#define	MQTT_TELEM_PAYLOAD	2			// Telemetry 
+#define	N_MQTT_PAYLOADS		3			// number currently defined
+
 // define a large integer
 #ifndef LARGE_INTEGER
 typedef union _LARGE_INTEGER {
@@ -69,7 +75,9 @@ typedef union _LARGE_INTEGER {
 // MQTT common fields
 typedef struct mqtt_hdr_t
 {
-	// Device ID
+	// device and frame info
+	uint8_t			PayloadType;	// type of payload
+	char			*HwType;		// hardware type
 	char			*DeviceID;		// device ID
 
 	// location: JSON Array
@@ -83,6 +91,11 @@ typedef struct mqtt_hdr_t
 	int    			batt_level;
 	LARGE_INTEGER	epoch;	// epoch time	
 } MQTT_HDR;
+
+/* 	@brief generate the appropriate MQTT publishing topic from header data
+	@param mqtt_hdr_t Struct containing the message header
+*/
+char *Get_MQTT_PubTopic(MQTT_HDR *hdr);
 
 // additional structure and methods for AQI application
 #if USE_AQI
