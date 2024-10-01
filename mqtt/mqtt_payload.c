@@ -29,6 +29,8 @@
 	Revision History:
 
 ---------------------------------------------------------------------------*/
+#include <string.h>
+
 #include "cJSON.h"
 #include "datatypes.h"
 
@@ -37,8 +39,8 @@
 */
 char *MQTT_Topics[N_MQTT_PAYLOADS] = {
 	"mqtt_aprs/aqi/",
-	"mqtt_aprs/rpt/",
-	"mqtt_aprs/rpt/",
+	"mqtt_aprs/uiframe/",
+	"mqtt_aprs/telem/",
 
 };
 
@@ -142,7 +144,7 @@ bool Format_AQI_Data(cJSON *root_object, struct mqtt_AQI_t *bme680)
 	 */
 	if ((AQIData = cJSON_CreateArray()) == NULL)
 		return false;
-	cJSON_AddItemToObject(root_object, "BME680", AQIData);
+	cJSON_AddItemToObject(root_object, "DataFrame", AQIData);
 	if ((AQIItem = cJSON_CreateObject()) == NULL)
 		return false;
 	cJSON_AddItemToArray(AQIData, AQIItem);
@@ -189,7 +191,7 @@ bool Format_UIFrame_Data(cJSON *root_object, struct mqtt_UIFrame_t *UIFrame)
 	 */
 	if ((FrameArray = cJSON_CreateArray()) == NULL)
 		return false;
-	cJSON_AddItemToObject(root_object, "UIFrame", FrameArray);
+	cJSON_AddItemToObject(root_object, "DataFrame", FrameArray);
     //
 	if ((FrameItem = cJSON_CreateObject()) == NULL)
 		return false;
@@ -245,7 +247,7 @@ bool Format_MQTT_Telem(cJSON *root_object, struct mqtt_Telemetry_t *telemetry)
 	 */
 	if ((TelemArray = cJSON_CreateArray()) == NULL)
 		return false;
-	cJSON_AddItemToObject(root_object, "Telemetry", TelemArray);
+	cJSON_AddItemToObject(root_object, "DataFrame", TelemArray);
     //
 	if ((TelemItem = cJSON_CreateObject()) == NULL)
 		return false;
